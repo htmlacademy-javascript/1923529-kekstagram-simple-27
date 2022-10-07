@@ -25,32 +25,59 @@ const descriptions = [
   'Спортивный внедорожник',
 ];
 
-const getRandomInteger = (min, max) => {
-  if (min < 0 || max < 0 || max <= min) {
-    return NaN;
+const getRandomInteger = (a, b) => {
+  if (typeof a !== 'number') {
+    throw 'Параметр "a" не является числовым значением';
+  }
+  if (typeof b !== 'number') {
+    throw 'Параметр "b" не является числовым значением';
+  }
+  if (a < 0) {
+    throw 'Параметр "a" не может быть отрицательным числом';
+  }
+  if (b < 0) {
+    throw 'Параметр "b "не может быть отрицательным числом';
+  }
+  if (!Number.isFinite(a)) {
+    throw 'Параметр "a" не является конечным значением';
+  }
+  if (!Number.isFinite(b)) {
+    throw 'Параметр "b" не является конечным значением';
+  }
+  if (a === b) {
+    return a;
   }
 
-  return Math.floor(Math.random() * (max - min + 1) + min);
+  const min = Math.floor(Math.min(a, b));
+  const max = Math.floor(Math.max(a, b));
+
+  if (min >= 0 && max > min) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  return NaN;
 };
 
-// eslint-disable-next-line no-unused-vars
-const checkStringLenght = (string, length) => string.length <= length;
+export const checkingStringLength = (string, length) => string.length <= length;
 
-const getRandomArrayElement = (elements) =>
-  elements[getRandomInteger(0, elements.length - 1)];
+const getRandomArrayElement = (elements) => {
+  if (elements.length === 0) {
+    return NaN;
+  }
+  return elements[getRandomInteger(0, elements.length - 1)];
+};
 
 const makePhotoDescription = (i) => ({
-  id: i,
-  url: `photos/${i}.jpg`,
+  id: i + 1,
+  url: `photos/${i + 1}.jpg`,
   description: getRandomArrayElement(descriptions),
   likes: getRandomInteger(15, 200),
   comments: getRandomInteger(0, 200),
 });
 
-// eslint-disable-next-line no-unused-vars
-const generationPhotos = () => {
+export const generationPhotos = () => {
   const photos = [];
-  for (let i = 1; i <= 25; i++) {
+  for (let i = 0; i <= 24; i++) {
     photos.push(makePhotoDescription(i));
   }
 
