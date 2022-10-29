@@ -1,5 +1,17 @@
 import { getRandomInteger, getRandomArrayElement } from './util.js';
 
+const PHOTO = 25;
+
+const LIKES = {
+  min: 15,
+  max: 200,
+};
+
+const COMMENTS = {
+  min: 0,
+  max: 200,
+};
+
 const descriptions = [
   'Отель Eden Хорватия',
   'Указатель Сходи на пляж',
@@ -31,14 +43,14 @@ const makePhotoDescription = (i) => ({
   id: i + 1,
   url: `photos/${i + 1}.jpg`,
   description: getRandomArrayElement(descriptions),
-  likes: getRandomInteger(15, 200),
-  comments: getRandomInteger(0, 200),
+  likes: getRandomInteger(LIKES.min, LIKES.max),
+  comments: getRandomInteger(COMMENTS.min, COMMENTS.max),
 });
 
 const generationPhotos = () => {
   const photos = [];
 
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < PHOTO; i++) {
     photos.push(makePhotoDescription(i));
   }
 
