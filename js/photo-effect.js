@@ -6,6 +6,39 @@ const effectLevelSlider = imgUploadOverlay.querySelector(
 );
 const effectLevelValue = imgUploadOverlay.querySelector('.effect-level__value');
 
+const EFFECT = {
+  // params:[min, max, start, step, effect, unit]
+  none: {
+    name: 'none',
+    className: 'effects__preview--none',
+  },
+  chrome: {
+    name: 'chrome',
+    className: 'effects__preview--chrome',
+    params: [0, 1, 1, 0.1, 'grayscale', ''],
+  },
+  sepia: {
+    name: 'sepia',
+    className: 'effects__preview--sepia',
+    params: [0, 1, 1, 0.1, 'sepia', ''],
+  },
+  marvin: {
+    name: 'marvin',
+    className: 'effects__preview--marvin',
+    params: [0, 100, 100, 1, 'invert', '%'],
+  },
+  phobos: {
+    name: 'phobos',
+    className: 'effects__preview--phobos',
+    params: [0, 3, 3, 0.1, 'blur', 'px'],
+  },
+  heat: {
+    name: 'heat',
+    className: 'effects__preview--heat',
+    params: [1, 3, 3, 0.1, 'brightness', ''],
+  },
+};
+
 noUiSlider.create(effectLevelSlider, {
   connect: 'lower',
   range: {
@@ -16,127 +49,72 @@ noUiSlider.create(effectLevelSlider, {
   step: 0.1,
 });
 
-const createSlider = (MIN, MAX, START, STEP, EFFECT, UNIT_MEASURE) => {
+const createSlider = (min, max, start, step, effect, unit) => {
   effectLevelSlider.noUiSlider.updateOptions({
     range: {
-      min: MIN,
-      max: MAX,
+      min: min,
+      max: max,
     },
-    start: START,
-    step: STEP,
+    start: start,
+    step: step,
   });
 
   effectLevelSlider.noUiSlider.on('update', () => {
     effectLevelValue.value = effectLevelSlider.noUiSlider.get();
-    imgUploadPreview.style.filter = `${EFFECT}(${effectLevelSlider.noUiSlider.get()}${UNIT_MEASURE})`;
+    imgUploadPreview.style.filter = `${effect}(${effectLevelSlider.noUiSlider.get()}${unit})`;
   });
 };
 
 const onPhotoEffectChange = (evt) => {
   const target = evt.target;
 
-  if (target && target.value === 'none') {
-    imgUploadPreview.classList.add('effects__preview--none');
+  if (target && target.value === EFFECT.none.name) {
+    imgUploadPreview.classList.add(EFFECT.none.className);
     imgUploadPreview.style.filter = '';
     slider.style.display = 'none';
   } else {
-    imgUploadPreview.classList.remove('effects__preview--none');
+    imgUploadPreview.classList.remove(EFFECT.none.className);
     slider.style.display = 'block';
   }
 
-  if (target && target.value === 'chrome') {
-    imgUploadPreview.classList.add('effects__preview--chrome');
+  if (target && target.value === EFFECT.chrome.name) {
+    imgUploadPreview.classList.add(EFFECT.chrome.className);
 
-    const CHROME = {
-      MIN: 0,
-      MAX: 1,
-      START: 1,
-      STEP: 0.1,
-      EFFECT: 'grayscale',
-      UNIT_MEASURE: '',
-    };
-
-    const { MIN, MAX, START, STEP, EFFECT, UNIT_MEASURE } = CHROME;
-
-    createSlider(MIN, MAX, START, STEP, EFFECT, UNIT_MEASURE);
+    createSlider(...EFFECT.chrome.params);
   } else {
-    imgUploadPreview.classList.remove('effects__preview--chrome');
+    imgUploadPreview.classList.remove(EFFECT.chrome.className);
   }
 
-  if (target && target.value === 'sepia') {
-    imgUploadPreview.classList.add('effects__preview--sepia');
+  if (target && target.value === EFFECT.sepia.name) {
+    imgUploadPreview.classList.add(EFFECT.sepia.className);
 
-    const SEPIA = {
-      MIN: 0,
-      MAX: 1,
-      START: 1,
-      STEP: 0.1,
-      EFFECT: 'sepia',
-      UNIT_MEASURE: '',
-    };
-
-    const { MIN, MAX, START, STEP, EFFECT, UNIT_MEASURE } = SEPIA;
-
-    createSlider(MIN, MAX, START, STEP, EFFECT, UNIT_MEASURE);
+    createSlider(...EFFECT.sepia.params);
   } else {
-    imgUploadPreview.classList.remove('effects__preview--sepia');
+    imgUploadPreview.classList.remove(EFFECT.sepia.className);
   }
 
-  if (target && target.value === 'marvin') {
-    imgUploadPreview.classList.add('effects__preview--marvin');
+  if (target && target.value === EFFECT.marvin.name) {
+    imgUploadPreview.classList.add(EFFECT.marvin.className);
 
-    const MARVIN = {
-      MIN: 0,
-      MAX: 100,
-      START: 100,
-      STEP: 1,
-      EFFECT: 'invert',
-      UNIT_MEASURE: '%',
-    };
-
-    const { MIN, MAX, START, STEP, EFFECT, UNIT_MEASURE } = MARVIN;
-
-    createSlider(MIN, MAX, START, STEP, EFFECT, UNIT_MEASURE);
+    createSlider(...EFFECT.marvin.params);
   } else {
-    imgUploadPreview.classList.remove('effects__preview--marvin');
+    imgUploadPreview.classList.remove(EFFECT.marvin.className);
   }
 
-  if (target && target.value === 'phobos') {
-    imgUploadPreview.classList.add('effects__preview--phobos');
+  if (target && target.value === EFFECT.phobos.name) {
+    imgUploadPreview.classList.add(EFFECT.phobos.className);
 
-    const PHOBOS = {
-      MIN: 0,
-      MAX: 3,
-      START: 3,
-      STEP: 0.1,
-      EFFECT: 'blur',
-      UNIT_MEASURE: 'px',
-    };
-
-    const { MIN, MAX, START, STEP, EFFECT, UNIT_MEASURE } = PHOBOS;
-
-    createSlider(MIN, MAX, START, STEP, EFFECT, UNIT_MEASURE);
+    createSlider(...EFFECT.phobos.params);
   } else {
-    imgUploadPreview.classList.remove('effects__preview--phobos');
+    imgUploadPreview.classList.remove(EFFECT.phobos.className);
   }
 
-  if (target && target.value === 'heat') {
-    imgUploadPreview.classList.add('effects__preview--heat');
+  if (target && target.value === EFFECT.heat.name) {
+    imgUploadPreview.classList.add(EFFECT.heat.className);
 
-    const HEAT = {
-      MIN: 1,
-      MAX: 3,
-      START: 3,
-      STEP: 0.1,
-      EFFECT: 'brightness',
-      UNIT_MEASURE: '',
-    };
-
-    const { MIN, MAX, START, STEP, EFFECT, UNIT_MEASURE } = HEAT;
-
-    createSlider(MIN, MAX, START, STEP, EFFECT, UNIT_MEASURE);
+    createSlider(...EFFECT.heat.params);
   } else {
-    imgUploadPreview.classList.remove('effects__preview--heat');
+    imgUploadPreview.classList.remove(EFFECT.heat.className);
   }
 };
 

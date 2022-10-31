@@ -15,8 +15,12 @@ const MAX_SCALE_VALUE = 100;
 const DEFAULT_SCALE_STEP = 25;
 
 const onScaleMinusClick = () => {
-  const currentValue = parseFloat(scaleControlValue.value);
-  const downDifference = currentValue - DEFAULT_SCALE_STEP;
+  let downDifference;
+  const currentValue = Number.parseFloat(scaleControlValue.value);
+
+  if (!isNaN(currentValue)) {
+    downDifference = currentValue - DEFAULT_SCALE_STEP;
+  }
 
   if (currentValue === MIN_SCALE_VALUE) {
     return false;
@@ -28,8 +32,12 @@ const onScaleMinusClick = () => {
 };
 
 const onScalePlusClick = () => {
-  const currentValue = parseFloat(scaleControlValue.value);
-  const bigDifference = currentValue + DEFAULT_SCALE_STEP;
+  let bigDifference;
+  const currentValue = Number.parseFloat(scaleControlValue.value);
+
+  if (!isNaN(currentValue)) {
+    bigDifference = currentValue + DEFAULT_SCALE_STEP;
+  }
 
   if (currentValue === MAX_SCALE_VALUE) {
     return false;

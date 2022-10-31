@@ -1,4 +1,5 @@
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
+const imgUploadForm = document.querySelector('#upload-select-image');
 const uploadFile = document.querySelector('#upload-file');
 const uploadCancel = document.querySelector('#upload-cancel');
 const imgUploadPreview = imgUploadOverlay.querySelector(
@@ -12,9 +13,9 @@ const onEscKeydown = (evt) => {
     imgUploadOverlay.classList.add('hidden');
     document.body.classList.remove('modal-open');
     document.removeEventListener('keydown', onEscKeydown);
-    uploadFile.value = '';
+    imgUploadForm.reset();
     imgUploadPreview.style.transform = '';
-    imgUploadPreview.classList = '';
+    imgUploadPreview.className = '';
   }
 };
 
@@ -30,9 +31,9 @@ const onCloseFormClick = () => {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscKeydown);
-  uploadFile.value = '';
+  imgUploadForm.reset();
   imgUploadPreview.style.transform = '';
-  imgUploadPreview.classList = '';
+  imgUploadPreview.className = '';
 };
 
 uploadFile.addEventListener('click', onContentLoadChange);
