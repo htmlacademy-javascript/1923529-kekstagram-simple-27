@@ -1,28 +1,42 @@
-import { isEscapeKey } from './util.js';
-
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
+const imgUploadForm = document.querySelector('#upload-select-image');
 const uploadFile = document.querySelector('#upload-file');
 const uploadCancel = document.querySelector('#upload-cancel');
+const imgUploadPreview = imgUploadOverlay.querySelector(
+  '.img-upload__preview img'
+);
+const slider = imgUploadOverlay.querySelector('.img-upload__effect-level');
 
-const onFormEscKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+const onEscKeydown = (evt) => {
+  if (evt.key === 'Escape') {
     evt.preventDefault();
     imgUploadOverlay.classList.add('hidden');
     document.body.classList.remove('modal-open');
-    document.removeEventListener('keydown', onFormEscKeydown);
-    uploadFile.value = '';
+    document.removeEventListener('keydown', onEscKeydown);
+    imgUploadForm.reset();
+    imgUploadPreview.style.transform = '';
+    imgUploadPreview.className = '';
   }
 };
 
-export const onContentLoad = uploadFile.addEventListener('change', () => {
+const onContentLoadChange = () => {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  document.addEventListener('keydown', onFormEscKeydown);
-});
+  slider.style.display = 'none';
+  imgUploadPreview.style.filter = '';
+  document.addEventListener('keydown', onEscKeydown);
+};
 
-export const onCloseFormClick = uploadCancel.addEventListener('click', () => {
+const onCloseFormClick = () => {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onFormEscKeydown);
-  uploadFile.value = '';
-});
+  document.removeEventListener('keydown', onEscKeydown);
+  imgUploadForm.reset();
+  imgUploadPreview.style.transform = '';
+  imgUploadPreview.className = '';
+};
+
+uploadFile.addEventListener('click', onContentLoadChange);
+uploadCancel.addEventListener('click', onCloseFormClick);
+
+export { imgUploadOverlay, imgUploadPreview, slider };
