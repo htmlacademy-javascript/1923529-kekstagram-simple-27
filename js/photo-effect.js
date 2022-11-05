@@ -8,6 +8,7 @@ const effectLevelValue = imgUploadOverlay.querySelector('.effect-level__value');
 
 const EFFECT = {
   // params:[min, max, start, step, effect, unit]
+
   none: {
     name: 'none',
     className: 'effects__preview--none',

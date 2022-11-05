@@ -1,9 +1,6 @@
-import { generationPhotos } from './data.js';
-
 const pictures = document.querySelector('.pictures');
-const photos = generationPhotos();
 
-const createPhotos = () => {
+const createPhotos = (photos) => {
   const picture = document
     .querySelector('#picture')
     .content.querySelector('.picture');
@@ -17,10 +14,10 @@ const createPhotos = () => {
     pictureLink.querySelector('.picture__comments').textContent =
       photo.comments;
 
-    pictureFragment.appendChild(pictureLink);
+    pictureFragment.append(pictureLink);
   });
 
-  pictures.appendChild(pictureFragment);
+  pictures.append(pictureFragment);
 };
 
 export { createPhotos };
