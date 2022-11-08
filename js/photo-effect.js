@@ -1,10 +1,8 @@
-import { imgUploadOverlay, imgUploadPreview, slider } from './form.js';
+import { overlay, preview, slider } from './form.js';
 
-const effectsList = imgUploadOverlay.querySelector('.effects__list');
-const effectLevelSlider = imgUploadOverlay.querySelector(
-  '.effect-level__slider'
-);
-const effectLevelValue = imgUploadOverlay.querySelector('.effect-level__value');
+const effectsList = overlay.querySelector('.effects__list');
+const effectSlider = overlay.querySelector('.effect-level__slider');
+const effectValue = overlay.querySelector('.effect-level__value');
 
 const EFFECT = {
   // params:[min, max, start, step, effect, unit]
@@ -40,7 +38,7 @@ const EFFECT = {
   },
 };
 
-noUiSlider.create(effectLevelSlider, {
+noUiSlider.create(effectSlider, {
   connect: 'lower',
   range: {
     min: 0,
@@ -51,7 +49,7 @@ noUiSlider.create(effectLevelSlider, {
 });
 
 const createSlider = (min, max, start, step, effect, unit) => {
-  effectLevelSlider.noUiSlider.updateOptions({
+  effectSlider.noUiSlider.updateOptions({
     range: {
       min: min,
       max: max,
@@ -60,9 +58,9 @@ const createSlider = (min, max, start, step, effect, unit) => {
     step: step,
   });
 
-  effectLevelSlider.noUiSlider.on('update', () => {
-    effectLevelValue.value = effectLevelSlider.noUiSlider.get();
-    imgUploadPreview.style.filter = `${effect}(${effectLevelSlider.noUiSlider.get()}${unit})`;
+  effectSlider.noUiSlider.on('update', () => {
+    effectValue.value = effectSlider.noUiSlider.get();
+    preview.style.filter = `${effect}(${effectSlider.noUiSlider.get()}${unit})`;
   });
 };
 
@@ -70,52 +68,52 @@ const onPhotoEffectChange = (evt) => {
   const target = evt.target;
 
   if (target && target.value === EFFECT.none.name) {
-    imgUploadPreview.classList.add(EFFECT.none.className);
-    imgUploadPreview.style.filter = '';
+    preview.classList.add(EFFECT.none.className);
+    preview.style.filter = '';
     slider.style.display = 'none';
   } else {
-    imgUploadPreview.classList.remove(EFFECT.none.className);
+    preview.classList.remove(EFFECT.none.className);
     slider.style.display = 'block';
   }
 
   if (target && target.value === EFFECT.chrome.name) {
-    imgUploadPreview.classList.add(EFFECT.chrome.className);
+    preview.classList.add(EFFECT.chrome.className);
 
     createSlider(...EFFECT.chrome.params);
   } else {
-    imgUploadPreview.classList.remove(EFFECT.chrome.className);
+    preview.classList.remove(EFFECT.chrome.className);
   }
 
   if (target && target.value === EFFECT.sepia.name) {
-    imgUploadPreview.classList.add(EFFECT.sepia.className);
+    preview.classList.add(EFFECT.sepia.className);
 
     createSlider(...EFFECT.sepia.params);
   } else {
-    imgUploadPreview.classList.remove(EFFECT.sepia.className);
+    preview.classList.remove(EFFECT.sepia.className);
   }
 
   if (target && target.value === EFFECT.marvin.name) {
-    imgUploadPreview.classList.add(EFFECT.marvin.className);
+    preview.classList.add(EFFECT.marvin.className);
 
     createSlider(...EFFECT.marvin.params);
   } else {
-    imgUploadPreview.classList.remove(EFFECT.marvin.className);
+    preview.classList.remove(EFFECT.marvin.className);
   }
 
   if (target && target.value === EFFECT.phobos.name) {
-    imgUploadPreview.classList.add(EFFECT.phobos.className);
+    preview.classList.add(EFFECT.phobos.className);
 
     createSlider(...EFFECT.phobos.params);
   } else {
-    imgUploadPreview.classList.remove(EFFECT.phobos.className);
+    preview.classList.remove(EFFECT.phobos.className);
   }
 
   if (target && target.value === EFFECT.heat.name) {
-    imgUploadPreview.classList.add(EFFECT.heat.className);
+    preview.classList.add(EFFECT.heat.className);
 
     createSlider(...EFFECT.heat.params);
   } else {
-    imgUploadPreview.classList.remove(EFFECT.heat.className);
+    preview.classList.remove(EFFECT.heat.className);
   }
 };
 

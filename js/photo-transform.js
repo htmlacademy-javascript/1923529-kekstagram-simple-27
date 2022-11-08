@@ -1,14 +1,8 @@
-import { imgUploadOverlay, imgUploadPreview } from './form.js';
+import { overlay, preview } from './form.js';
 
-const scaleControlSmaller = imgUploadOverlay.querySelector(
-  '.scale__control--smaller'
-);
-const scaleControlBigger = imgUploadOverlay.querySelector(
-  '.scale__control--bigger'
-);
-const scaleControlValue = imgUploadOverlay.querySelector(
-  '.scale__control--value'
-);
+const smallerButton = overlay.querySelector('.scale__control--smaller');
+const biggerButton = overlay.querySelector('.scale__control--bigger');
+const controlValue = overlay.querySelector('.scale__control--value');
 
 const MIN_SCALE_VALUE = 25;
 const MAX_SCALE_VALUE = 100;
@@ -16,7 +10,7 @@ const DEFAULT_SCALE_STEP = 25;
 
 const onScaleMinusClick = () => {
   let downDifference;
-  const currentValue = Number.parseFloat(scaleControlValue.value);
+  const currentValue = Number.parseFloat(controlValue.value);
 
   if (!isNaN(currentValue)) {
     downDifference = currentValue - DEFAULT_SCALE_STEP;
@@ -26,14 +20,14 @@ const onScaleMinusClick = () => {
     return false;
   }
 
-  scaleControlValue.value = `${downDifference}%`;
+  controlValue.value = `${downDifference}%`;
 
-  imgUploadPreview.style.transform = `scale(${downDifference / 100})`;
+  preview.style.transform = `scale(${downDifference / 100})`;
 };
 
 const onScalePlusClick = () => {
   let bigDifference;
-  const currentValue = Number.parseFloat(scaleControlValue.value);
+  const currentValue = Number.parseFloat(controlValue.value);
 
   if (!isNaN(currentValue)) {
     bigDifference = currentValue + DEFAULT_SCALE_STEP;
@@ -43,10 +37,10 @@ const onScalePlusClick = () => {
     return false;
   }
 
-  scaleControlValue.value = `${bigDifference}%`;
+  controlValue.value = `${bigDifference}%`;
 
-  imgUploadPreview.style.transform = `scale(${bigDifference / 100})`;
+  preview.style.transform = `scale(${bigDifference / 100})`;
 };
 
-scaleControlBigger.addEventListener('click', onScalePlusClick);
-scaleControlSmaller.addEventListener('click', onScaleMinusClick);
+biggerButton.addEventListener('click', onScalePlusClick);
+smallerButton.addEventListener('click', onScaleMinusClick);

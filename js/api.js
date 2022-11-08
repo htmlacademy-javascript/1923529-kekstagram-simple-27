@@ -1,5 +1,5 @@
 import { createPhotos } from './photo-create.js';
-import { openAlert, showAlert } from './util.js';
+import { openSuccess, openError, showAlert } from './alert-message.js';
 import {
   onCloseFormClick,
   blockSubmitButton,
@@ -9,9 +9,7 @@ import {
 const getData = () => {
   fetch('https://27.javascript.pages.academy/kekstagram-simple/data')
     .then((response) => response.json())
-    .then((photos) => {
-      createPhotos(photos);
-    })
+    .then(createPhotos)
     .catch(() => {
       showAlert(
         'Не удалось загрузить посты. Попробуйте перезагрузить страницу'
@@ -25,23 +23,23 @@ const sendData = (evt) => {
   evt.preventDefault();
   blockSubmitButton();
 
-  fetch('https://27.javascript.pages.academy/kekstagram-simpl', {
+  fetch('https://27.javascript.pages.academy/kekstagram-simple', {
     method: 'POST',
     body: formData,
   })
     .then((response) => {
       if (response.ok) {
         onCloseFormClick();
-        unblockSubmitButton();
-        openAlert('success');
+        openSuccess();
       } else {
-        unblockSubmitButton();
-        openAlert('error');
+        throw new Error('Ошибка отправки данных');
       }
     })
     .catch(() => {
+      openError();
+    })
+    .finally(() => {
       unblockSubmitButton();
-      openAlert('error');
     });
 };
 
