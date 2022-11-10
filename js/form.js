@@ -1,42 +1,59 @@
-const imgUploadOverlay = document.querySelector('.img-upload__overlay');
-const imgUploadForm = document.querySelector('#upload-select-image');
-const uploadFile = document.querySelector('#upload-file');
-const uploadCancel = document.querySelector('#upload-cancel');
-const imgUploadPreview = imgUploadOverlay.querySelector(
-  '.img-upload__preview img'
-);
-const slider = imgUploadOverlay.querySelector('.img-upload__effect-level');
+import { sendData } from './api.js';
+import { isEscapeKey } from './util.js';
 
-const onEscKeydown = (evt) => {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    imgUploadOverlay.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-    document.removeEventListener('keydown', onEscKeydown);
-    imgUploadForm.reset();
-    imgUploadPreview.style.transform = '';
-    imgUploadPreview.className = '';
-  }
-};
+const overlay = document.querySelector('.img-upload__overlay');
+const form = document.querySelector('#upload-select-image');
+const uploadFile = document.querySelector('#upload-file');
+const closeCansel = document.querySelector('#upload-cancel');
+const submitButton = overlay.querySelector('#upload-submit');
+const preview = overlay.querySelector('.img-upload__preview img');
+const slider = overlay.querySelector('.img-upload__effect-level');
 
 const onContentLoadChange = () => {
-  imgUploadOverlay.classList.remove('hidden');
+  overlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   slider.style.display = 'none';
-  imgUploadPreview.style.filter = '';
-  document.addEventListener('keydown', onEscKeydown);
+  preview.style.filter = '';
+  document.addEventListener('keydown', onEscFormKeydown);
+  preview.src = URL.createObjectURL(uploadFile.files[0]);
 };
 
 const onCloseFormClick = () => {
-  imgUploadOverlay.classList.add('hidden');
+  overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onEscKeydown);
-  imgUploadForm.reset();
-  imgUploadPreview.style.transform = '';
-  imgUploadPreview.className = '';
+  document.removeEventListener('keydown', onEscFormKeydown);
+  form.reset();
+  preview.style.transform = '';
+  preview.className = '';
 };
 
-uploadFile.addEventListener('click', onContentLoadChange);
-uploadCancel.addEventListener('click', onCloseFormClick);
+function onEscFormKeydown(evt) {
+  if (isEscapeKey(evt.key)) {
+    evt.preventDefault();
+    onCloseFormClick();
+  }
+}
 
-export { imgUploadOverlay, imgUploadPreview, slider };
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Публикую...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+form.addEventListener('submit', sendData);
+uploadFile.addEventListener('change', onContentLoadChange);
+closeCansel.addEventListener('click', onCloseFormClick);
+
+export {
+  overlay,
+  preview,
+  slider,
+  onCloseFormClick,
+  blockSubmitButton,
+  unblockSubmitButton,
+  onEscFormKeydown,
+};

@@ -37,8 +37,6 @@ const getRandomInteger = (a, b) => {
   return NaN;
 };
 
-const checkingStringLength = (string, length) => string.length <= length;
-
 const getRandomArrayElement = (elements) => {
   if (!Array.isArray(elements)) {
     return undefined;
@@ -55,8 +53,8 @@ const getRandomArrayElement = (elements) => {
   return elements[getRandomInteger(0, elements.length - 1)];
 };
 
-export {
-  getRandomInteger,
-  getRandomArrayElement,
-  checkingStringLength,
-};
+const isOutsideEvent = (evt) => evt.target.matches('section');
+
+const isEscapeKey = (key) => key === 'Escape';
+
+export { getRandomInteger, getRandomArrayElement, isOutsideEvent, isEscapeKey };
