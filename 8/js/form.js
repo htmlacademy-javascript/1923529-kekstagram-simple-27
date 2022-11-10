@@ -1,34 +1,34 @@
 import { sendData } from './api.js';
+import { isEscapeKey } from './util.js';
 
-const imgUploadOverlay = document.querySelector('.img-upload__overlay');
-const imgUploadForm = document.querySelector('#upload-select-image');
+const overlay = document.querySelector('.img-upload__overlay');
+const form = document.querySelector('#upload-select-image');
 const uploadFile = document.querySelector('#upload-file');
-const uploadCancel = document.querySelector('#upload-cancel');
-const submitButton = imgUploadOverlay.querySelector('#upload-submit');
-const imgUploadPreview = imgUploadOverlay.querySelector(
-  '.img-upload__preview img'
-);
-const slider = imgUploadOverlay.querySelector('.img-upload__effect-level');
+const closeCansel = document.querySelector('#upload-cancel');
+const submitButton = overlay.querySelector('#upload-submit');
+const preview = overlay.querySelector('.img-upload__preview img');
+const slider = overlay.querySelector('.img-upload__effect-level');
 
 const onContentLoadChange = () => {
-  imgUploadOverlay.classList.remove('hidden');
+  overlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   slider.style.display = 'none';
-  imgUploadPreview.style.filter = '';
+  preview.style.filter = '';
   document.addEventListener('keydown', onEscFormKeydown);
+  preview.src = URL.createObjectURL(uploadFile.files[0]);
 };
 
 const onCloseFormClick = () => {
-  imgUploadOverlay.classList.add('hidden');
+  overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscFormKeydown);
-  imgUploadForm.reset();
-  imgUploadPreview.style.transform = '';
-  imgUploadPreview.className = '';
+  form.reset();
+  preview.style.transform = '';
+  preview.className = '';
 };
 
 function onEscFormKeydown(evt) {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt.key)) {
     evt.preventDefault();
     onCloseFormClick();
   }
@@ -44,15 +44,16 @@ const unblockSubmitButton = () => {
   submitButton.textContent = 'Опубликовать';
 };
 
-imgUploadForm.addEventListener('submit', sendData);
-uploadFile.addEventListener('click', onContentLoadChange);
-uploadCancel.addEventListener('click', onCloseFormClick);
+form.addEventListener('submit', sendData);
+uploadFile.addEventListener('change', onContentLoadChange);
+closeCansel.addEventListener('click', onCloseFormClick);
 
 export {
-  imgUploadOverlay,
-  imgUploadPreview,
+  overlay,
+  preview,
   slider,
   onCloseFormClick,
   blockSubmitButton,
   unblockSubmitButton,
+  onEscFormKeydown,
 };

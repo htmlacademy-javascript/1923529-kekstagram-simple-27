@@ -1,6 +1,6 @@
 import './form.js';
-import './photo-transform.js';
-import './photo-effect.js';
+import './scale-photo.js';
+import './effect-photo.js';
 import { getData } from './api.js';
 
 getData();
