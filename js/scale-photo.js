@@ -1,12 +1,12 @@
 import { overlay, preview } from './form.js';
 
-const smallerButton = overlay.querySelector('.scale__control--smaller');
-const biggerButton = overlay.querySelector('.scale__control--bigger');
-const controlValue = overlay.querySelector('.scale__control--value');
-
 const MIN_SCALE_VALUE = 25;
 const MAX_SCALE_VALUE = 100;
 const DEFAULT_SCALE_STEP = 25;
+
+const smallerButton = overlay.querySelector('.scale__control--smaller');
+const biggerButton = overlay.querySelector('.scale__control--bigger');
+const controlValue = overlay.querySelector('.scale__control--value');
 
 const onScaleMinusClick = () => {
   const currentValue = Number.parseFloat(controlValue.value);
