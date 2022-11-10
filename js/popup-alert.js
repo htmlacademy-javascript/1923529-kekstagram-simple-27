@@ -1,4 +1,5 @@
 import { onEscFormKeydown } from './form.js';
+import { isEscapeKey, isOutsideEvent } from './util.js';
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
@@ -33,14 +34,14 @@ const openSuccess = () => {
   };
 
   const onOutCloseClick = (evt) => {
-    if (evt.target.matches('section')) {
+    if (isOutsideEvent(evt)) {
       evt.preventDefault();
       onCloseSuccessClick();
     }
   };
 
   const onEscSuccessKeydown = (evt) => {
-    if (evt.key === 'Escape') {
+    if (isEscapeKey(evt.key)) {
       evt.preventDefault();
       onCloseSuccessClick();
     }
@@ -71,14 +72,14 @@ const openError = () => {
   };
 
   const onOutCloseClick = (evt) => {
-    if (evt.target.matches('section')) {
+    if (isOutsideEvent(evt)) {
       evt.preventDefault();
       onCloseErrorClick();
     }
   };
 
   const onEscErrorKeydown = (evt) => {
-    if (evt.key === 'Escape') {
+    if (isEscapeKey(evt.key)) {
       evt.preventDefault();
       onCloseErrorClick();
     }

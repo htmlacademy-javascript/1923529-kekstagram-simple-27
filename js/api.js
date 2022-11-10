@@ -1,5 +1,5 @@
-import { createPhotos } from './photo-create.js';
-import { openSuccess, openError, showAlert } from './alert-message.js';
+import { createPhotos } from './create-photos.js';
+import { openSuccess, openError, showAlert } from './popup-alert.js';
 import {
   onCloseFormClick,
   blockSubmitButton,

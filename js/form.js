@@ -1,4 +1,5 @@
 import { sendData } from './api.js';
+import { isEscapeKey } from './util.js';
 
 const overlay = document.querySelector('.img-upload__overlay');
 const form = document.querySelector('#upload-select-image');
@@ -14,6 +15,7 @@ const onContentLoadChange = () => {
   slider.style.display = 'none';
   preview.style.filter = '';
   document.addEventListener('keydown', onEscFormKeydown);
+  preview.src = URL.createObjectURL(uploadFile.files[0]);
 };
 
 const onCloseFormClick = () => {
@@ -26,9 +28,8 @@ const onCloseFormClick = () => {
 };
 
 function onEscFormKeydown(evt) {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt.key)) {
     evt.preventDefault();
-    evt.stopImmediatePropagation();
     onCloseFormClick();
   }
 }
@@ -44,7 +45,7 @@ const unblockSubmitButton = () => {
 };
 
 form.addEventListener('submit', sendData);
-uploadFile.addEventListener('click', onContentLoadChange);
+uploadFile.addEventListener('change', onContentLoadChange);
 closeCansel.addEventListener('click', onCloseFormClick);
 
 export {

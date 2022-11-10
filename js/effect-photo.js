@@ -78,7 +78,6 @@ const onPhotoEffectChange = (evt) => {
 
   if (target && target.value === EFFECT.chrome.name) {
     preview.classList.add(EFFECT.chrome.className);
-
     createSlider(...EFFECT.chrome.params);
   } else {
     preview.classList.remove(EFFECT.chrome.className);
@@ -86,7 +85,6 @@ const onPhotoEffectChange = (evt) => {
 
   if (target && target.value === EFFECT.sepia.name) {
     preview.classList.add(EFFECT.sepia.className);
-
     createSlider(...EFFECT.sepia.params);
   } else {
     preview.classList.remove(EFFECT.sepia.className);
@@ -94,7 +92,6 @@ const onPhotoEffectChange = (evt) => {
 
   if (target && target.value === EFFECT.marvin.name) {
     preview.classList.add(EFFECT.marvin.className);
-
     createSlider(...EFFECT.marvin.params);
   } else {
     preview.classList.remove(EFFECT.marvin.className);
@@ -102,7 +99,6 @@ const onPhotoEffectChange = (evt) => {
 
   if (target && target.value === EFFECT.phobos.name) {
     preview.classList.add(EFFECT.phobos.className);
-
     createSlider(...EFFECT.phobos.params);
   } else {
     preview.classList.remove(EFFECT.phobos.className);
@@ -110,7 +106,6 @@ const onPhotoEffectChange = (evt) => {
 
   if (target && target.value === EFFECT.heat.name) {
     preview.classList.add(EFFECT.heat.className);
-
     createSlider(...EFFECT.heat.params);
   } else {
     preview.classList.remove(EFFECT.heat.className);

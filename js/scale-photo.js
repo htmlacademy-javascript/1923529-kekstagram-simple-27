@@ -9,37 +9,31 @@ const MAX_SCALE_VALUE = 100;
 const DEFAULT_SCALE_STEP = 25;
 
 const onScaleMinusClick = () => {
-  let downDifference;
   const currentValue = Number.parseFloat(controlValue.value);
-
-  if (!isNaN(currentValue)) {
-    downDifference = currentValue - DEFAULT_SCALE_STEP;
-  }
 
   if (currentValue === MIN_SCALE_VALUE) {
     return false;
   }
 
-  controlValue.value = `${downDifference}%`;
-
-  preview.style.transform = `scale(${downDifference / 100})`;
+  if (!isNaN(currentValue)) {
+    const downDifference = currentValue - DEFAULT_SCALE_STEP;
+    controlValue.value = `${downDifference}%`;
+    preview.style.transform = `scale(${downDifference / 100})`;
+  }
 };
 
 const onScalePlusClick = () => {
-  let bigDifference;
   const currentValue = Number.parseFloat(controlValue.value);
-
-  if (!isNaN(currentValue)) {
-    bigDifference = currentValue + DEFAULT_SCALE_STEP;
-  }
 
   if (currentValue === MAX_SCALE_VALUE) {
     return false;
   }
 
-  controlValue.value = `${bigDifference}%`;
-
-  preview.style.transform = `scale(${bigDifference / 100})`;
+  if (!isNaN(currentValue)) {
+    const bigDifference = currentValue + DEFAULT_SCALE_STEP;
+    controlValue.value = `${bigDifference}%`;
+    preview.style.transform = `scale(${bigDifference / 100})`;
+  }
 };
 
 biggerButton.addEventListener('click', onScalePlusClick);
